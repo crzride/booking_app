@@ -13,8 +13,8 @@ class User(AbstractUser):
 
     email = models.EmailField(unique=True)
     phone = PhoneNumberField (region=None,blank=True,null=True)
-    country = models.CharField(max_length=30, blank=False)
-    sex = models.CharField(choices=SEX, max_length=10)
+    country = models.CharField(default='null', max_length=30, blank=False)
+    sex = models.CharField(choices=SEX, max_length=10, default='M')
 
     def __str__(self):
         return f"{self.username}"

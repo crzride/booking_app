@@ -23,11 +23,11 @@ class Room(models.Model):
         ('TWIN', 'Twin Room'),
         ('FAMILY', 'Family Studio')
     )
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
     type = models.CharField(choices=ROOM_TYPES, max_length=30)
     guest_number = models.PositiveIntegerField(default=1,
                                                validators=[
-                                                 MaxValueValidator(10)
+                                                 MaxValueValidator(6)
                                                ])
     price = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=0)
