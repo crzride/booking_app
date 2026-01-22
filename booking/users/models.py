@@ -6,8 +6,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
+    SEX = (
+        ('M', 'Male'),
+        ('F', 'Female')
+    )
+
     email = models.EmailField(unique=True)
     phone = PhoneNumberField (region=None,blank=True,null=True)
+    country = models.CharField(max_length=30, blank=False)
+    sex = models.CharField(choices=SEX, max_length=10)
 
     def __str__(self):
         return f"{self.username}"
