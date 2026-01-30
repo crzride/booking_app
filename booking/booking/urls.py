@@ -16,7 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+
+from hotels.views import HotelView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/hotels/', HotelView.as_view()),
+    path("api/hotels/<int:pk>/", HotelView.as_view())
 ]
+
+# router = routers.DefaultRouter()
+# router.register(r'api/hotels', HotelView)
