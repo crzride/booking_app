@@ -1,12 +1,15 @@
 from django.core.serializers import serialize
 from django.shortcuts import get_object_or_404
 from django.template.context_processors import request
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from hotels.models import Hotel
-from hotels.serializers import HotelSerializer
+from hotels.models import Hotel, Room
+from hotels.serializers import HotelSerializer, RoomSerializer
 
 
 class HotelView(APIView):
@@ -35,3 +38,11 @@ class HotelView(APIView):
         return Response(serializer.data)
 
 
+class RoomView(ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['hotel']
+    search_fields = ['name', 'author_name']
+    ordering_fields = ['hotel', 'type', 'guest_number',
+                  'price']

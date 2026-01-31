@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
+    'django_filters',    #добавляем для фильтрации
+    'rest_framework',   #добавляем после уст ДРФ
     'hotels',
     'users',
     'bookings',
@@ -74,6 +75,17 @@ TEMPLATES = [
         },
     },
 ]
+#Это для фильтрации чтобы избежать ошибок,
+# надо разобраться)
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+}
 
 WSGI_APPLICATION = 'booking.wsgi.application'
 
