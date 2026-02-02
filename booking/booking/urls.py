@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from hotels.views import HotelView, RoomView
+from users.views import RegisterView
 
 router = routers.DefaultRouter()
 
@@ -27,7 +29,10 @@ router.register('api/rooms', RoomView)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/hotels/', HotelView.as_view()),
-    path("api/hotels/<int:pk>/", HotelView.as_view())
+    path("api/hotels/<int:pk>/", HotelView.as_view()),
+    path("auth/register/", RegisterView.as_view()),
+    path("auth/token/", TokenObtainPairView.as_view()),
+    path("auth/token/refresh/", TokenRefreshView.as_view()),
 ]
 
 urlpatterns += router.urls

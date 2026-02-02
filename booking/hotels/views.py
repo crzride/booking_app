@@ -4,6 +4,7 @@ from django.template.context_processors import request
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -13,7 +14,8 @@ from hotels.serializers import HotelSerializer, RoomSerializer
 
 
 class HotelView(APIView):
-
+    permission_classes = [IsAuthenticated]
+#Required to replace it to ModelViewSet or whatever
     def get(self, request):
         hotels = Hotel.objects.all()
         serializer = HotelSerializer(hotels, many=True)
@@ -46,3 +48,4 @@ class RoomView(ModelViewSet):
     search_fields = ['name', 'author_name']
     ordering_fields = ['hotel', 'type', 'guest_number',
                   'price']
+    permission_classes = [AllowAny]
