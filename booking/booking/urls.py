@@ -20,7 +20,7 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from hotels.views import HotelView, RoomView
-from users.views import RegisterView
+from users.views import RegisterView, MeView
 
 router = routers.DefaultRouter()
 
@@ -30,9 +30,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/hotels/', HotelView.as_view()),
     path("api/hotels/<int:pk>/", HotelView.as_view()),
+    # auth #
     path("auth/register/", RegisterView.as_view()),
     path("auth/token/", TokenObtainPairView.as_view()),
     path("auth/token/refresh/", TokenRefreshView.as_view()),
+    path("auth/me/", MeView.as_view()),
 ]
-
 urlpatterns += router.urls
