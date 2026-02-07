@@ -16,8 +16,12 @@ def tomorrow():
 class Booking(models.Model):
     user = ForeignKey(User, on_delete=models.PROTECT, related_name='bookings')
     hotel = ForeignKey(Hotel, on_delete=models.PROTECT, related_name='bookings')
-    room = ManyToManyField(Room, related_name='bookings')
+    room = ForeignKey(Room, related_name='bookings', null=True, on_delete=models.PROTECT)
     guest_number = models.PositiveIntegerField(default=1,
+                                               validators=[
+                                                 MaxValueValidator(10)
+                                               ])
+    rooms_count = models. PositiveIntegerField(default=0,
                                                validators=[
                                                  MaxValueValidator(10)
                                                ])

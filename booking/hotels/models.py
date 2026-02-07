@@ -9,7 +9,7 @@ class Hotel(models.Model):
     description = models.TextField(blank=False)
     phone = PhoneNumberField (region=None,blank=True,null=True)
     owner = models.CharField(max_length=30)
-    email = models.EmailField(max_length=30, unique=True, blank=False)
+    email = models.EmailField(max_length=254, unique=True, blank=False)
 
     def __str__(self):
         return f"Hotel {self.name}"
@@ -29,8 +29,8 @@ class Room(models.Model):
                                                validators=[
                                                  MaxValueValidator(6)
                                                ])
-    price = models.PositiveIntegerField(default=0)
-    quantity = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(default=0, decimal_places=1, max_digits=10)
+    stock = models.PositiveIntegerField(default=0)
     prepayment = models.BooleanField(default=False)
 #     there is a question how to set prepayment)
 

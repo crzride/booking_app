@@ -6,10 +6,13 @@ from hotels.models import Hotel, Room
 class HotelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hotel
-        fields = ('__all__')
+        fields = ('name', 'address', 'description',
+                  'phone', 'owner', 'email')
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ('hotel', 'type', 'guest_number',
-                  'price', 'quantity', 'prepayment')
+                  'price', 'stock', 'prepayment')
+
+
