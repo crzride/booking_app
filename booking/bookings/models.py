@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.db.models import ManyToManyField, ForeignKey, PROTECT
+from django.db.models import  ForeignKey
 
 from hotels.models import Hotel, Room
 from users.models import User
@@ -14,6 +14,12 @@ def tomorrow():
 
 
 class Booking(models.Model):
+    STATUS = (
+        ('PENDING', 'PENDING'),
+        ('CONFIRMED', 'CONFIRMED'),
+        ('CANCELLED', 'CANCELLED')
+    )
+
     user = ForeignKey(User, on_delete=models.PROTECT, related_name='bookings')
     hotel = ForeignKey(Hotel, on_delete=models.PROTECT, related_name='bookings')
     room = ForeignKey(Room, related_name='bookings', null=True, on_delete=models.PROTECT)
@@ -27,6 +33,8 @@ class Booking(models.Model):
                                                ])
     check_in = models.DateField(default=date.today)
     check_out = models.DateField(default=tomorrow)
+    status = models.CharField(choices=STATUS, max_length=30,  default='PENDING')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
         today = date.today()
@@ -48,4 +56,4 @@ class Booking(models.Model):
 
 
     def __str__(self):
-        return f"{self.user} {self.hotel} id {self.id}"
+        return f"{self.id} {self.hotel} {self.room} {self.check_in} - {self.check_out}"
