@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
@@ -22,7 +22,7 @@ class Booking(models.Model):
 
     user = ForeignKey(User, on_delete=models.PROTECT, related_name='bookings')
     hotel = ForeignKey(Hotel, on_delete=models.PROTECT, related_name='bookings')
-    room = ForeignKey(Room, related_name='bookings', null=True, on_delete=models.PROTECT)
+    room = ForeignKey(Room, related_name='bookings', null=False, on_delete=models.PROTECT)
     guest_number = models.PositiveIntegerField(default=1,
                                                validators=[
                                                  MaxValueValidator(10)
