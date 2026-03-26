@@ -48,33 +48,33 @@ class BookingCreateSerializer(serializers.ModelSerializer):
                 f"This room allows a maximum of {room_guest_number} guests."
             )
 
-        # Availability check
-        overlapping = Booking.objects.filter(
-            room = room,
-            check_in__lt=check_out,
-            check_out__gt=check_in,
-        )
-
-        total_booked = overlapping.aggregate(
-            total = Sum('rooms_count')
-        )['total'] or 0
-
-        available_rooms = room.stock - total_booked
-
-        print(f"total_booked = {total_booked}")
-        print(f"available_rooms = {available_rooms}")
-
-        if available_rooms == 0:
-            raise serializers.ValidationError(
-                f"for the selected dates rooms are not available."
-                f"Please change dates or choose another room type"
-            )
-
-        if rooms_count > available_rooms:
-            raise serializers.ValidationError(
-                f"for the selected dates available only  {available_rooms} rooms."
-                f"Please change dates or choose another room type"
-            )
+        # # Availability check
+        # overlapping = Booking.objects.filter(
+        #     room = room,
+        #     check_in__lt=check_out,
+        #     check_out__gt=check_in,
+        # )
+        #
+        # total_booked = overlapping.aggregate(
+        #     total = Sum('rooms_count')
+        # )['total'] or 0
+        #
+        # available_rooms = room.stock - total_booked
+        #
+        # print(f"total_booked = {total_booked}")
+        # print(f"available_rooms = {available_rooms}")
+        #
+        # if available_rooms == 0:
+        #     raise serializers.ValidationError(
+        #         f"for the selected dates rooms are not available."
+        #         f"Please change dates or choose another room type"
+        #     )
+        #
+        # if rooms_count > available_rooms:
+        #     raise serializers.ValidationError(
+        #         f"for the selected dates available only  {available_rooms} rooms."
+        #         f"Please change dates or choose another room type"
+        #     )
 
 
         return attrs
